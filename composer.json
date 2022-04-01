@@ -19,7 +19,7 @@
         "laminas/laminas-servicemanager": "^3.4.1, required to use the model factories or provide services"
     },
     "extra": {
-        "webinertia": {
+        "laminas": {
             "component": "Webinertia\\ModelManager",
             "config-provider": "Webinertia\\ModelManager\\ConfigProvider"
         }
