@@ -1,0 +1,38 @@
+{
+    "name": "webinertia/webinertia-modelmanager",
+    "description": "Factory Driven Model container",
+    "keywords": [
+        "webinertia",
+        "model"
+    ],
+    "homepage": "https://github.com/webinertia/modelmanager",
+    "license": "BSD-3-Clause",
+    "require": {
+        "php": "^7.3 || ~8.0.0",
+        "laminas/laminas-db": "^2.14.1",
+        "laminas/laminas-eventmanager": "^3.3.0",
+        "laminas/laminas-servicemanager": "^3.4.1"
+    },
+    "suggest": {
+        "laminas/laminas-db": "^2.14.1",
+        "laminas/laminas-eventmanager": "^3.3.0, required for tablegateway event feature",
+        "laminas/laminas-servicemanager": "^3.4.1, required to use the model factories or provide services"
+    },
+    "extra": {
+        "webinertia": {
+            "component": "Webinertia\\ModelManager",
+            "config-provider": "Webinertia\\ModelManager\\ConfigProvider"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Webinertia\\ModelManager\\": "src/"
+        }
+    },
+    "support": {
+        "issues": "https://github.com/webinertia/modelmanager/issues",
+        "chat": "https://github.com/webinertia/modelmanager/discussions",
+        "source": "https://github.com/webinertia/modelmanager",
+        "docs": "https://github.com/webinertia/modelmanager/wiki"
+    }
+}
