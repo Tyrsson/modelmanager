@@ -8,10 +8,15 @@ use Laminas\ServiceManager\AbstractPluginManager;
 use Laminas\ServiceManager\Exception\InvalidServiceException;
 use Webinertia\ModelManager\ModelInterface;
 
+use function get_class;
+use function gettype;
+use function is_object;
+use function sprintf;
+
 /**
- * laminas-servicemanager v3-compatible plugin manager implementation for form elements.
+ * laminas-servicemanager v3-compatible plugin manager implementation for Models.
  *
- * Enforces that elements retrieved are instances of ElementInterface.
+ * Enforces that elements retrieved are instances of ModelInterface.
  */
 class ModelManager extends AbstractPluginManager
 {
@@ -54,14 +59,14 @@ class ModelManager extends AbstractPluginManager
      */
     public function validate($plugin)
     {
-        parent::validate($plugin);
-        // if (! $plugin instanceof $this->instanceOf) {
-        //     throw new InvalidServiceException(sprintf(
-        //         '%s can only create instances of %s; %s is invalid',
-        //         get_class($this),
-        //         $this->instanceOf,
-        //         is_object($plugin) ? get_class($plugin) : gettype($plugin)
-        //     ));
-        // }
+        //parent::validate($plugin);
+        if (! $plugin instanceof $this->instanceOf) {
+            throw new InvalidServiceException(sprintf(
+                '%s can only create instances of %s; %s is invalid',
+                get_class($this),
+                $this->instanceOf,
+                is_object($plugin) ? get_class($plugin) : gettype($plugin)
+            ));
+        }
     }
 }
