@@ -36,7 +36,6 @@ class TableGateway extends AbstractTableGateway
         $this->featureSet->setTableGateway($this);
         // Add the desired features
         $this->featureSet->addFeature(new GlobalAdapterFeature());
-        $this->featureSet->addFeature(new MetadataFeature());
         // pass an instance of the EventManager
         $eventFeature = new EventFeature($eventManager);
         $this->featureSet->addFeature($eventFeature);

@@ -9,12 +9,14 @@
     "license": "BSD-3-Clause",
     "require": {
         "php": "^7.3 || ~8.0.0",
+        "laminas/laminas-component-installer" : "^2.6",
         "laminas/laminas-db": "^2.14.1",
         "laminas/laminas-eventmanager": "^3.4.0",
         "laminas/laminas-permissions-acl": "^2.9.0",
         "laminas/laminas-servicemanager": "^3.11.1"
     },
     "suggest": {
+        "laminas/laminas-component-installer" : "^2.6, required for configuration injection",
         "laminas/laminas-db": "^2.14.1",
         "laminas/laminas-eventmanager": "^3.4.0, required for tablegateway event feature",
         "laminas/laminas-permissions-acl": "^2.9.0, required for acl integration for ownership assertion",
