@@ -26,13 +26,11 @@ trait ModelTrait
     /**
      * @param string $column
      * @param mixed $value
-     * @return ModelInterface
      * @throws RuntimeException
      */
-    public function fetchByColumn($column, $value)
+    public function fetchByColumn($column, $value): ModelInterface
     {
-        $column = (string) $column;
-        /** @var ResultSet $resultSet */
+        $column    = (string) $column;
         $resultSet = $this->db->select([$column => $value]);
         $row       = $resultSet->current();
         if (! $row) {
@@ -45,12 +43,11 @@ trait ModelTrait
      * @param string $column
      * @param mixed $value
      * @param null|array $columns
-     * @return ModelInterface
      * @throws TableGatewayRuntimeException
      * @throws InvalidArgumentException
      * @throws RuntimeException
      */
-    public function fetchColumns($column, $value, ?array $columns)
+    public function fetchColumns($column, $value, ?array $columns): ModelInterface
     {
         /** @var ResultSet $resultSet */
         $resultSet = $this->db->select(function (Select $select) use ($column, $value, $columns) {
@@ -75,7 +72,7 @@ trait ModelTrait
         return $this->db->select();
     }
 
-    public function insert(AbstractModel $model): int
+    public function insert(AbstractModel $model): Mixed
     {
         $this->db->insert($model->toArray());
         return $this->db->getLastInsertValue();
@@ -87,7 +84,7 @@ trait ModelTrait
      * @throws TableGatewayRuntimeException
      * @throws InvalidArgumentException
      */
-    public function update(AbstractModel $model, $where = null, ?array $joins = null): int
+    public function update(AbstractModel $model, $where = null, ?array $joins = null): mixed
     {
         return $this->db->update($model->toArray(), $where, $joins);
     }
