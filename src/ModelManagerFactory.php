@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Webinertia\ModelManager;
 
-use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\AbstractPluginManager;
 use Laminas\ServiceManager\Config;
 use Laminas\ServiceManager\Factory\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Psr\Container\ContainerInterface;
+use Webinertia\ModelManager\ModelManager;
 
 use function is_array;
 
@@ -21,7 +21,7 @@ class ModelManagerFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $name, ?array $options = null)
     {
-        $pluginManager = new \Webinertia\ModelManager\ModelManager($container, $options ?: []);
+        $pluginManager = new ModelManager($container, $options ?: []);
 
         // If this is in a laminas-mvc application, the ServiceListener will inject
         // merged configuration during bootstrap.
@@ -45,19 +45,5 @@ class ModelManagerFactory implements FactoryInterface
         (new Config($config['model_manager']))->configureServiceManager($pluginManager);
 
         return $pluginManager;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return AbstractPluginManager
-     */
-    public function createService(ServiceLocatorInterface $container, $name = null, $requestedName = null)
-    {
-        return $this(
-            $container,
-            $requestedName ?: __NAMESPACE__ . '\ModelManager',
-            $this->creationOptions
-        );
     }
 }

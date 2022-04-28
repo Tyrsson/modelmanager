@@ -21,12 +21,12 @@ class TableGateway extends AbstractTableGateway
      * @var string $table
      */
     public $table;
-/**
- * @param string $table (database table name)
- * @param AbstractModel $arrayObjectPrototype
- * @return void
- * @throws RuntimeException
- */
+    /**
+     * @param string $table (database table name)
+     * @param AbstractModel $arrayObjectPrototype
+     * @return void
+     * @throws RuntimeException
+     */
     public function __construct($table, EventManager $eventManager, ?ResultSet $resultSetPrototype = null)
     {
         // Set the table name
