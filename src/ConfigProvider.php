@@ -20,10 +20,10 @@ class ConfigProvider
     {
         return [
             'aliases'   => [
-                ModelManager::class => 'ModelManager',
+                'ModelManager' => ModelManager::class,
             ],
             'factories' => [
-                'ModelManager' => ModelManagerFactory::class,
+                ModelManager::class => ModelManagerFactory::class,
             ],
         ];
     }
