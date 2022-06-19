@@ -47,7 +47,7 @@ abstract class AbstractModel extends ArrayObject implements
         $resultSetPrototype = new ResultSet();
         $resultSetPrototype->setArrayObjectPrototype($this);
         $this->db     = new TableGateway($table, $eventManager, $resultSetPrototype);
-        $this->config = $config->db;
+        $this->config = $config;
         parent::__construct([], ArrayObject::ARRAY_AS_PROPS);
     }
 
