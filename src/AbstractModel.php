@@ -36,21 +36,18 @@ abstract class AbstractModel extends ArrayObject implements
      * @var string $ownerIdColumn
      * */
     protected $ownerIdColumn;
-    /** @var ModelManager $modelManager */
-    protected $modelManager;
     /**
      * @param string $table
      * @return void
      * @throws InvalidArgumentException
      * @throws ExceptionInvalidArgumentException
      */
-    public function __construct($table, ModelManager $modelManager, EventManager $eventManager, Config $config, ?Logger $logger = null)
+    public function __construct($table, EventManager $eventManager, Config $config, ?Logger $logger = null)
     {
-        $this->modelManager = $modelManager;
         $resultSetPrototype = new ResultSet();
         $resultSetPrototype->setArrayObjectPrototype($this);
         $this->db     = new TableGateway($table, $eventManager, $resultSetPrototype);
-        $this->config = $config;
+        $this->config = $config->db;
         parent::__construct([], ArrayObject::ARRAY_AS_PROPS);
     }
 
