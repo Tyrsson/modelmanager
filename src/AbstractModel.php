@@ -36,8 +36,6 @@ abstract class AbstractModel extends ArrayObject implements
      * @var string $ownerIdColumn
      * */
     protected $ownerIdColumn;
-    /** @var ModelManager $modelManager */
-    protected $modelManager;
     /**
      * @param string $table
      * @return void
