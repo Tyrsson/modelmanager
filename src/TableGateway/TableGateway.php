@@ -32,7 +32,8 @@ class TableGateway extends AbstractTableGateway
         $table,
         ?EventManager $eventManager = null,
         ?ResultSet $resultSetPrototype = null,
-        $enableEvents = false
+        $enableEvents = false,
+        $listener = null
     ) {
         // Set the table name
         $this->table = $table;
@@ -44,7 +45,7 @@ class TableGateway extends AbstractTableGateway
         // if we have an instance of the events manager and events are enabled, add the event feature
         if ($eventManager instanceof EventManager && $enableEvents) {
             $eventFeature = new EventFeature($eventManager);
-            $this->featureSet->addFeature(new EventFeature($eventManager));
+            $this->featureSet->addFeature($eventFeature);
         }
         $this->resultSetPrototype = $resultSetPrototype ?? new ResultSet();
         // inititalize this instance

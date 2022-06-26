@@ -50,14 +50,15 @@ abstract class AbstractModel extends ArrayObject implements
         ?Config $config = null,
         ?Logger $logger = null,
         $enableEvents = false,
-        $tableGatewayClass = null
+        $tableGatewayClass = null,
+        $listener = null
     ) {
         $resultSetPrototype = new ResultSet();
         $resultSetPrototype->setArrayObjectPrototype($this);
         if ($tableGatewayClass === null) {
-            $this->db = new TableGateway($table, null, $resultSetPrototype, false);
+            $this->db = new TableGateway($table, $eventManager, $resultSetPrototype, $enableEvents);
         } else {
-            $this->db = new $tableGatewayClass($table, $eventManager, $resultSetPrototype, true);
+            $this->db = new $tableGatewayClass($table, $eventManager, $resultSetPrototype, true, $listener);
         }
 
         $this->config = $config;
@@ -65,7 +66,7 @@ abstract class AbstractModel extends ArrayObject implements
         parent::__construct([], ArrayObject::ARRAY_AS_PROPS);
     }
 
-    public function getTablegateway(): TableGatewayInterface
+    public function getTableGateway(): TableGatewayInterface
     {
         return $this->db;
     }
