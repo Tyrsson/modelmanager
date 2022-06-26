@@ -24,11 +24,16 @@ class TableGateway extends AbstractTableGateway
     /**
      * @param string $table (database table name)
      * @param AbstractModel $arrayObjectPrototype
+     * @param bool $enableEvents
      * @return void
      * @throws RuntimeException
      */
-    public function __construct($table, EventManager $eventManager, ?ResultSet $resultSetPrototype = null)
-    {
+    public function __construct(
+        $table,
+        ?EventManager $eventManager = null,
+        ?ResultSet $resultSetPrototype = null,
+        $enableEvents = false
+    ) {
         // Set the table name
         $this->table = $table;
         // Create a FeatureSet
@@ -36,9 +41,11 @@ class TableGateway extends AbstractTableGateway
         $this->featureSet->setTableGateway($this);
         // Add the desired features
         $this->featureSet->addFeature(new GlobalAdapterFeature());
-        // pass an instance of the EventManager
-        $eventFeature = new EventFeature($eventManager);
-        $this->featureSet->addFeature($eventFeature);
+        // if we have an instance of the events manager and events are enabled, add the event feature
+        if ($eventManager instanceof EventManager && $enableEvents) {
+            $eventFeature = new EventFeature($eventManager);
+            $this->featureSet->addFeature(new EventFeature($eventManager));
+        }
         $this->resultSetPrototype = $resultSetPrototype ?? new ResultSet();
         // inititalize this instance
         $this->initialize();

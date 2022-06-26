@@ -8,6 +8,7 @@ use Laminas\Config\Config;
 use Laminas\Db\ResultSet\Exception\InvalidArgumentException;
 use Laminas\Db\ResultSet\ResultSet;
 use Laminas\Db\Sql\Sql;
+use Laminas\Db\TableGateway\TableGatewayInterface;
 use Laminas\EventManager\EventManager;
 use Laminas\Log\Logger;
 use Laminas\Permissions\Acl\ProprietaryInterface;
@@ -15,7 +16,6 @@ use Laminas\Permissions\Acl\Resource\ResourceInterface;
 use Laminas\Permissions\Acl\Role\RoleInterface;
 use Laminas\Stdlib\ArrayObject;
 use Webinertia\ModelManager\ModelInterface;
-use Webinertia\ModelManager\ModelManager;
 use Webinertia\ModelManager\TableGateway\TableGateway;
 
 abstract class AbstractModel extends ArrayObject implements
@@ -38,20 +38,34 @@ abstract class AbstractModel extends ArrayObject implements
     protected $ownerIdColumn;
     /**
      * @param string $table
+     * @param bool $enableEvents
+     * @param string $tableGatewayClass
      * @return void
      * @throws InvalidArgumentException
      * @throws ExceptionInvalidArgumentException
      */
-    public function __construct($table, EventManager $eventManager, Config $config, ?Logger $logger = null)
-    {
+    public function __construct(
+        $table,
+        ?EventManager $eventManager = null,
+        ?Config $config = null,
+        ?Logger $logger = null,
+        $enableEvents = false,
+        $tableGatewayClass = null
+    ) {
         $resultSetPrototype = new ResultSet();
         $resultSetPrototype->setArrayObjectPrototype($this);
-        $this->db     = new TableGateway($table, $eventManager, $resultSetPrototype);
+        if ($tableGatewayClass === null) {
+            $this->db = new TableGateway($table, null, $resultSetPrototype, false);
+        } else {
+            $this->db = new $tableGatewayClass($table, $eventManager, $resultSetPrototype, true);
+        }
+
         $this->config = $config;
+        $this->logger = $logger;
         parent::__construct([], ArrayObject::ARRAY_AS_PROPS);
     }
 
-    public function getTablegateway(): TableGateway
+    public function getTablegateway(): TableGatewayInterface
     {
         return $this->db;
     }
